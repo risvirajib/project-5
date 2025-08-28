@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Hotline Directory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1a56db;
+            --secondary: #2563eb;
+            --accent: #e11d48;
+            --light: #f3f4f6;
+            --dark: #1f2937;
+            --success: #059669;
+            --card-bg: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --gradient-start: #1e40af;
+            --gradient-end: #2563eb;
+            --history-bg: #ffffff;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .logo img {
+            height: 42px;
+        }
+
+        .nav-items {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .nav-item i {
+            color: var(--accent);
+        }
+
+        .hero {
+            color: white;
+            text-align: center;
+            padding: 3.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            background-color: #02553d;
+        }
+
+        .hero-logo {
+            background: white;
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-logo img {
+            width: 70px;
+            height: 70px;
+        }
+
+        .hero-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-slogan {
+            font-size: 1.15rem;
+            max-width: 600px;
+            opacity: 0.92;
+            font-weight: 400;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2.2rem;
+            padding: 2.2rem;
+            max-width: 1450px;
+            margin: 0 auto;
+        }
+
+        .card-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            padding: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .card-icon {
+            width: 54px;
+            height: 54px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .card-icon img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .card-info {
+            flex: 1;
+        }
+
+        .card-name {
+            font-weight: 700;
+            font-size: 1.18rem;
+            color: var(--text-primary);
+        }
+
+        .card-name-en {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+        }
+
+        .card-number {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-top: 0.6rem;
+            letter-spacing: 0.5px;
+        }
+
+        .card-body {
+            padding: 1.2rem 1.6rem;
+        }
+
+        .card-badge {
+            display: inline-block;
+            padding: 0.35rem 0.9rem;
+            background: #eff6ff;
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            border: 1px solid #dbeafe;
+        }
+
+        .card-footer {
+            padding: 1.2rem 1.6rem;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #f1f1f1;
+            gap: 0.8rem;
+        }
+
+        .card-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.65rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            justify-content: center;
+            font-size: 0.95rem;
+        }
+
+        .btn-copy {
+            background: #f8fafc;
+            color: var(--text-primary);
+            border: 1px solid #e5e7eb;
+        }
+
+        .btn-copy:hover {
+            background: #f1f5f9;
+            border-color: #d1d5db;
+        }
+
+        .btn-call {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-call:hover {
+            background: #068b65;
+            box-shadow: 0 4px 12px rgba(16, 225, 159, 0.25);
+        }
+
+        .heart-icon {
+            color: #d1d5db;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: color 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .heart-icon.active {
+            color: var(--accent);
+        }
+
+        .history-section {
+            background: var(--history-bg);
+            border-radius: 14px;
+            padding: 1.8rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+            height: fit-content;
+            border: 1px solid #e5e7eb;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.6rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .history-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .history-title i {
+            color: var(--primary);
+        }
+
+        .clear-history {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .clear-history:hover {
+            background: #fef2f2;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.2rem;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            align-items: center;
+        }
+
+        .history-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .history-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .history-number {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .history-time {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            white-space: nowrap;
+        }
+
+        .emergency-section {
+            grid-column: 1 / -1;
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 2.2rem;
+            margin-top: 1.2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e5e7eb;
+        }
+
+        .emergency-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.8rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .emergency-title i {
+            color: var(--accent);
+        }
+
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .history-section {
+                order: 2;
+            }
+            
+            .card-section {
+                order: 1;
+            }
+            
+            .emergency-section {
+                order: 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.8rem 1.2rem;
+            }
+            
+            .hero {
+                padding: 2.5rem 1.2rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .card-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-items {
+                gap: 1.2rem;
+            }
+            
+            .main-content {
+                padding: 1.5rem;
+                gap: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .hero {
+                padding: 2rem 1rem;
+                background-color: ;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-logo {
+                padding: 0px;
+                width: 100%
+                height: 100%;
+            }
+            
+            .hero-logo img {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .card-footer {
+                flex-direction: column;
+            }
+            
+            .nav-items {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .history-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+            
+            .history-time {
+                align-self: flex-end;
+            }
+        }
+
+        .empty-history {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 2.5rem 1rem;
+            background: #f8fafc;
+            border-radius: 10px;
+            border: 1px dashed #d1d5db;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="/assets/logo.png" alt="Emergency Logo">
+            <span style="color: #05976e;">Emergency Service Directory</span>
+        </div>
+        <div class="nav-items">
+            <div class="nav-item">
+                <i class="fas fa-heart"></i>
+                <span id="heart-count">100</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-coins"></i>
+                <span id="coin-count">100</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-copy"></i>
+                <span id="copy-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-logo">
+            <img src="/assets/logo.png" alt="Emergency Icon">
+        </div>
+        <h1 class="hero-title">Emergency Hotline Directory</h1>
+        <p class="hero-slogan">Immediate access to emergency services when every second counts</p>
+    </section>
+
+    <div class="main-content">
+        <section class="card-section">
+        </section>
+
+        <section class="history-section">
+            <div class="history-header">
+                <h2 class="history-title">
+                    <i class="fas fa-history"></i>
+                    Call History
+                </h2>
+                <button class="clear-history" id="clear-history">Clear History</button>
+            </div>
+            <div class="history-list" id="history-list">
+                <p class="empty-history"> No call history yet </p>
+            </div>
+        </section>
+
+        <section class="emergency-section">
+            <h2 class="emergency-title">
+                <i class="fas fa-phone-alt"></i>
+                Emergency Hotlines
+            </h2>
+            <div class="emergency-grid">
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const services = [
+            {
+                id: 1,
+                icon: '',
+                image: '/assets/logo.png',
+                name: 'National Emergency Number',
+                nameEn: 'National Emergency',
+                number: '999',
+                category: 'All'
+            },
+            {
+                id: 2,
+                icon: 'police',
+                image: '/assets/police.png',
+                name: 'Police Helpline Number',
+                nameEn: 'Police ',
+                number: '999',
+                category: 'police'
+            },
+            {
+                id: 3,
+                icon: 'Fire Service Number',
+                image: '/assets/fire-service.png',
+                name: 'Fire Service Number',
+                nameEn: 'Fire Service ',
+                number: '999',
+                category: 'Fire '
+            },
+            {
+                id: 4,
+                icon: '',
+                image: '/assets/ambulance.png',
+                name: 'Ambulance Service Number',
+                nameEn: 'Ambulance ',
+                number: '999',
+                category: 'Ambulance'
+            },
+            {
+                id: 5,
+                icon: '',
+                image: '/assets/emergency.png',
+                name: 'Women & Child Helpline',
+                nameEn: 'Women & Child Helpline',
+                number: '999',
+                category: ' Help'
+            },
+            {
+                id: 6,
+                icon: '',
+                image: '/assets/emergency.png',
+                name: 'Anti-Corruption Helpline',
+                nameEn: 'Anti-Corruption ',
+                number: '999',
+                category: 'Gov..'
+            },
+            {
+                id: 7,
+                icon: '',
+                image: '/assets/emergency.png',
+                name: 'Electricity Helpline',
+                nameEn: 'Electricity Outage',
+                number: '179',
+                category: 'Electricity'
+            },
+            {
+                id: 8,
+                icon: '',
+                image: '/assets/emergency.png',
+                name: 'Brac Helpline',
+                nameEn: 'Brac Helpline',
+                number: '161',
+                category: ' '
+            } 
+            
+           
+        ];
+
+        const cardSection = document.querySelector('.card-section');
+        const historyList = document.getElementById('history-list');
+        const clearHistoryBtn = document.getElementById('clear-history');
+        const heartCount = document.getElementById('heart-count');
+        const coinCount = document.getElementById('coin-count');
+        const copyCount = document.getElementById('copy-count');
+        const emergencyGrid = document.querySelector('.emergency-grid');
+
+        let hearts = 100;
+        let coins = 100;
+        let copies = 0;
+        let callHistory = [];
+
+        function init() {
+            renderCards();
+            renderEmergencyHotlines();
+            updateCounts();
+            loadHistory();
+        }
+
+        function renderCards() {
+            cardSection.innerHTML = '';
+            
+            services.forEach(service => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <img src="${service.image}" alt="${service.name}">
+                        </div>
+                        <div class="card-info">
+                            <div class="card-name">${service.name}</div>
+                            <div class="card-name-en">${service.nameEn}</div>
+                            <div class="card-number">${service.number}</div>
+                        </div>
+                        <i class="fas fa-heart heart-icon" data-id="${service.id}"></i>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge">${service.category}</span>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn btn-copy" data-number="${service.number}">
+                            <i class="fas fa-copy"></i>
+                            Copy
+                        </button>
+                        <button class="card-btn btn-call" data-id="${service.id}" data-name="${service.name}" data-number="${service.number}">
+                            <i class="fas fa-phone"></i>
+                            Call
+                        </button>
+                    </div>
+                `;
+                cardSection.appendChild(card);
+            });
+            
+            addCardEventListeners();
+        }
+
+        function renderEmergencyHotlines() {
+            emergencyGrid.innerHTML = '';
+            
+            services.forEach(service => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <img src="${service.image}" alt="${service.name}">
+                        </div>
+                        <div class="card-info">
+                            <div class="card-name">${service.name}</div>
+                            <div class="card-number">${service.number}</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-badge">${service.category}</span>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn btn-copy" data-number="${service.number}">
+                            <i class="fas fa-copy"></i>
+                            Copy
+                        </button>
+                        <button class="card-btn btn-call" data-id="${service.id}" data-name="${service.name}" data-number="${service.number}">
+                            <i class="fas fa-phone"></i>
+                            Call
+                        </button>
+                    </div>
+                `;
+                emergencyGrid.appendChild(card);
+            });
+            
+            addCardEventListeners();
+        }
+
+        function addCardEventListeners() {
+            document.querySelectorAll('.heart-icon').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    if (this.classList.contains('active')) {
+                        hearts++;
+                    } else {
+                        hearts--;
+                    }
+                    updateCounts();
+                });
+            });
+            
+            document.querySelectorAll('.btn-copy').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const number = this.getAttribute('data-number');
+                    copyNumber(number);
+                });
+            });
+            
+            document.querySelectorAll('.btn-call').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    const number = this.getAttribute('data-number');
+                    callService(id, name, number);
+                });
+            });
+        }
+
+        function copyNumber(number) {
+            navigator.clipboard.writeText(number).then(() => {
+                alert(`Number ${number} copied to clipboard!`);
+                copies++;
+                updateCounts();
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                const textArea = document.createElement("textarea");
+                textArea.value = number;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    alert(`Number ${number} copied to clipboard!`);
+                    copies++;
+                    updateCounts();
+                } catch (err) {
+                    alert('Failed to copy number. Please try again.');
+                }
+                document.body.removeChild(textArea);
+            });
+        }
+
+        function callService(id, name, number) {
+            if (coins < 20) {
+                alert(`Not enough coins to call ${name}. You need 20 coins but you have only ${coins}.`);
+                return;
+            }
+            
+            const time = new Date().toLocaleTimeString();
+            alert(`Calling ${name} at ${number}...`);
+            
+            coins -= 20;
+            updateCounts();
+            
+            addToHistory(id, name, number, time);
+        }
+
+        function addToHistory(id, name, number, time) {
+            callHistory.push({ id, name, number, time });
+            saveHistory();
+            renderHistory();
+        }
+
+        function renderHistory() {
+            if (callHistory.length === 0) {
+                historyList.innerHTML = '<p class="empty-history">No call history yet</p>';
+                return;
+            }
+            
+            historyList.innerHTML = '';
+            callHistory.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.innerHTML = `
+                    <div class="history-info">
+                        <div class="history-name">${item.name}</div>
+                        <div class="history-number">${item.number}</div>
+                    </div>
+                    <div class="history-time">${item.time}</div>
+                `;
+                historyList.appendChild(historyItem);
+            });
+        }
+
+        function saveHistory() {
+            localStorage.setItem('callHistory', JSON.stringify(callHistory));
+        }
+
+        function loadHistory() {
+            const savedHistory = localStorage.getItem('callHistory');
+            if (savedHistory) {
+                callHistory = JSON.parse(savedHistory);
+                renderHistory();
+            }
+        }
+
+        function updateCounts() {
+            heartCount.textContent = hearts;
+            coinCount.textContent = coins;
+            copyCount.textContent = copies;
+        }
+
+        clearHistoryBtn.addEventListener('click', function() {
+            callHistory = [];
+            saveHistory();
+            renderHistory();
+        });
+
+        init();
+    </script>
+</body>
+</html>
